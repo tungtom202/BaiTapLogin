@@ -1,102 +1,72 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, View, Text,Button, onPressLearnMore, Alert } from "react-native";
-
-const UselessTextInput = () => {
-  const [text, onChangeText] = React.useState(null);
-  const [number, onChangeNumber] = React.useState(null);
-
+import * as React from "react";
+import { Button, View, Text, TextInput, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Buttonn } from "./components/Buttonn";
+function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-    
-    <SafeAreaView style={styles.wrap}>
-      <Text style={styles.wrap_text}>Login Here</Text>
-      <View style={styles.compo_input}>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        placeholder="Email..."
-        value={text}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="Password"
-        keyboardType="numeric"
-      />
-      </View>
-      <View style={styles.wrap_button1}>
-      <View style={styles.wrap_button}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text style={styles.textt}>Home Page</Text>
       <Button
-     style={styles.button} 
-     onPress={onPressLearnMore}
-     title="Đăng nhập "
-     color="#00b6ed"
-     accessibilityLabel="Learn more about this purple button" 
-     />
-      </View>
-
-      </View>
-     <Text style={styles.forgot_pass}
-      onPress={()=> Alert.alert("Đỗ Đăng Tùng ")}>
-      Forgot your password?
-     </Text>
-     <Text style={styles.forgot_pass}
-      onPress={()=> Alert.alert("hello ")}>
-      Register
-     </Text>
-    </SafeAreaView>
+        style={styles.wrap_button}
+        title="Register"
+        color="red"
+        onPress={() => navigation.navigate("Register")}
+      />
+      <Button
+        title="Forgot password"
+        onPress={() => navigation.navigate("ForgotPassword")}
+      />
     </View>
   );
-};
+}
+function Register() {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <TextInput placeholder="UserName" style={styles.input} />
+      <TextInput placeholder="PassWord" style={styles.input} />
+      <Buttonn>Register</Buttonn>
 
+    </View>
+  );
+}
+function ForgotPassword() {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <TextInput placeholder="UserName" style={styles.input} />
+      <Buttonn>Get passWord</Buttonn>
+    </View>
+  );
+}
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor: '#ddd'
-  },
   input: {
-    height: 42,
+    height: 40,
+    width: "70%",
     margin: 12,
-    padding: 12,
-    borderRadius: 28,
-    backgroundColor: '#fff'
+    borderWidth: 0,
+    paddingLeft: 50,
+    borderRadius: 20,
+    backgroundColor: "white",
   },
-  wrap:{
-    width: 300,
-    height: 500,
-  
+  btn: {
+    width: "70%",
   },
-  compo_input:{
-    marginTop: 20
-  },
-  wrap_text:{
-    textAlign: 'center',
-    fontSize: 20,
-    color: '#999',
-    paddingVertical: 15,
-    marginBottom: 15
-  },
-  wrap_button1:{
-    width: 300,
-    height: 50,
-    marginTop: 20
-  },
-
-  wrap_button:{
-
-    width: 288,
-    paddingLeft: 10
-  },
-  
-  forgot_pass:{
-    textAlign:'center', 
-    paddingVertical: 20,
-    
+  textt:{
+    fontSize: 30
   }
-
 });
 
-export default UselessTextInput;
+export default App;
